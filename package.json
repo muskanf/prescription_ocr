@@ -1,0 +1,21 @@
+{
+  "name": "smart-intake-",
+  "version": "1.0.0",
+  "description": "Drag-and-drop OCR tool for pharmacy intake (Electron + TrOCR)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "echo \"(no build step yet)\""
+  },
+  "author": "Muskan Fatima",
+  "license": "MIT",
+  "keywords": [
+    "electron",
+    "ocr",
+    "pharmacy",
+    "prescription"
+  ],
+  "dependencies": {
+    "electron": "^30.0.0"
+  }
+}
