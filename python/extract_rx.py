@@ -18,8 +18,9 @@ except ImportError as e:
 
 # ---------- Settings ----------
 DEVICE   = "cuda" if torch.cuda.is_available() else "cpu"
-DPI      = 200
-MODEL_ID = "microsoft/trocr-small-handwritten"
+DPI      = 800
+MODEL_ID = "microsoft/trocr-base-handwritten"
+
 
 _processor, _model = None, None
 def get_model():
@@ -68,11 +69,20 @@ def parse_fields(text: str):
         "medications": meds or [{"name":"—","dose":"—","sig":"—"}]
     }
 
-def image_to_text(img):
-    proc, model = get_model()
-    pix = proc(images=img, return_tensors="pt").pixel_values.to(DEVICE)
-    ids = model.generate(pix, max_length=256)
-    return proc.batch_decode(ids, skip_special_tokens=True)[0].lower()
+def image_to_text(img: Image.Image) -> str:
+    processor, model = get_model()
+    pixel_values = processor(
+        images=img,
+        return_tensors="pt",
+        padding=True,
+        truncation=True
+    ).pixel_values.to(DEVICE)
+    generated_ids = model.generate(pixel_values, max_length=256)
+    text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+    print("\nRAW_OCR>>", text[:400], "<<END_RAW", file=sys.stderr)
+
+    return text.lower()
+
 
 def pdf_to_image(pdf):
     return convert_from_path(str(pdf), dpi=DPI, first_page=1, last_page=1)[0]

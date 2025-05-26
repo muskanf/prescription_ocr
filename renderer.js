@@ -17,7 +17,7 @@ function App() {
     setLoading(true);
     setData(null);
 
-    const py = spawn('python3', ['python/extract_rx.py', filePath]);
+    const py = spawn('python', ['python/extract_rx.py', filePath]);
     let output = '';
 
     py.stdout.on('data', chunk => output += chunk.toString());
