@@ -5,11 +5,12 @@ const {
 } = MaterialUI;
 
 const { spawn } = require('child_process');
-const fs        = require('fs');
+const fs = require('fs');
+
 
 function App() {
-  const [step, setStep]   = React.useState("welcome");   // welcome | instructions | upload
-  const [data, setData]   = React.useState(null);
+  const [step, setStep] = React.useState("welcome");   // welcome | instructions | upload
+  const [data, setData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
 
   // ---------- OCR pipeline ----------
@@ -17,12 +18,14 @@ function App() {
     setLoading(true);
     setData(null);
 
-    const py = spawn('python', ['python/extract_rx.py', filePath]);
+    const path = require('path')
+    const script = path.join(__dirname, 'extract_rx.py')
+    const py = spawn('python', [script, filePath])
     let output = '';
 
     py.stdout.on('data', chunk => output += chunk.toString());
     py.stdout.on('end', () => {
-      try   { setData(JSON.parse(output)); }
+      try { setData(JSON.parse(output)); }
       catch { alert("Could not parse OCR output."); }
       setLoading(false);
     });
@@ -63,8 +66,10 @@ function App() {
       "Welcome to m3dswft",
       "AI-powered prescription intake in seconds.",
       [
-        React.createElement(Button, { variant: "contained", size: "large",
-          onClick: () => setStep("instructions") }, "Start")
+        React.createElement(Button, {
+          variant: "contained", size: "large",
+          onClick: () => setStep("instructions")
+        }, "Start")
       ]
     );
   }
@@ -74,8 +79,10 @@ function App() {
       "How it Works",
       "1. Drag a scanned prescription or click Upload\n2. AI reads patient, meds & sig codes\n3. Review & send to RxConnect",
       [
-        React.createElement(Button, { variant: "outlined", size: "large",
-          onClick: () => setStep("upload") }, "Proceed to Upload"),
+        React.createElement(Button, {
+          variant: "outlined", size: "large",
+          onClick: () => setStep("upload")
+        }, "Proceed to Upload"),
         React.createElement(Link, {
           href: "#", underline: "hover",
           onClick: () => setStep("welcome")
@@ -118,13 +125,21 @@ function App() {
       // Result card
       data && React.createElement(Card, { id: "results-card" },
         React.createElement(CardContent, null, [
-          React.createElement(Typography, { variant: "h6" }, `Patient: ${data.patient}`),
-          React.createElement(Typography, { variant: "body1" }, `DOB: ${data.dob}`),
-          React.createElement(Typography, { variant: "body1" }, `Doctor: ${data.doctor}`),
-          React.createElement(Typography, { variant: "subtitle1", sx: { mt: 2 } }, "Medications:"),
-          React.createElement("ul", null, data.medications.map((m, i) =>
-            React.createElement("li", { key: i }, `${m.name} ${m.dose} — ${m.sig}`)
-          ))
+
+          React.createElement(Typography, { variant: "h6" },
+            `Patient: ${data.name || '—'}`),
+
+          React.createElement(Typography, { variant: "body1" },
+            `DOB: ${data.dob || '—'}`),
+
+          React.createElement(Typography, { variant: "subtitle1", sx: { mt: 2 } },
+            "Medication"),
+
+          React.createElement(Typography, { variant: "body1" },
+            `${data.medication || '—'}${data.dosage ? ' ' + data.dosage : ''}`),
+
+          React.createElement(Typography, { variant: "body2", sx: { mt: 1 } },
+            `Frequency: ${data.frequency || '—'}`)
         ])
       ),
 
@@ -138,12 +153,14 @@ function App() {
 
     // Back link
     React.createElement(Box, { textAlign: "center", mt: 4 },
-      React.createElement(Link, { href: "#", underline: "hover",
-        onClick: () => setStep("instructions") }, "Back to Instructions")
+      React.createElement(Link, {
+        href: "#", underline: "hover",
+        onClick: () => setStep("instructions")
+      }, "Back to Instructions")
     )
   ]);
 }
 
 ReactDOM.createRoot(document.getElementById("root"))
-        .render(React.createElement(App));
+  .render(React.createElement(App));
 
