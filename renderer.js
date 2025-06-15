@@ -43,7 +43,7 @@ function App() {
   const handleSend = () => {
     if (!data) return;
     fs.appendFileSync('output/output.csv', JSON.stringify(data) + '\n');
-    alert("Saved to RxConnect (CSV)!");
+    alert("Exported to CSV!");
   };
 
   // ---------- Reusable chunks ----------
@@ -133,7 +133,7 @@ function App() {
         variant: "contained",
         disabled: !data,
         onClick: handleSend
-      }, "Send to RxConnect")
+      }, "Parse Prescription")
     ]),
 
     // Back link
