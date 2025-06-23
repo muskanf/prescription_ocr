@@ -17,10 +17,17 @@ function App() {
     setLoading(true);
     setData(null);
 
-    const path = require('path')
-    const script = path.join(__dirname, 'extract_rx.py')
-    const py = spawn('python', [script, filePath])
+    const path = require('path');
+    const { spawn } = require('child_process');
+    const isDev = require('electron-is-dev');
+
+    // In dev, exe sits next to renderer.js; in production it’s copied to resourcesPath
+    const baseDir = isDev ? __dirname : process.resourcesPath;
+    const exePath = path.join(baseDir, 'extract_rx.exe');
+
     let output = '';
+    const py = spawn(exePath, [filePath]);
+
 
     py.stdout.on('data', (chunk) => {
       output += chunk.toString();
@@ -32,7 +39,7 @@ function App() {
           console.error(result.trace);
           alert(`OCR error: ${result.error}`);
         } else {
-          setData(result);      
+          setData(result);
         }
       } catch {
         alert("Could not parse OCR output.");
