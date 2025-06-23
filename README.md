@@ -1,6 +1,6 @@
-# 💊 Smart Intake: AI-Powered Prescription Reader
+# 💊 Prescription Ocr: AI-Powered Prescription Reader
 
-**Smart Intake** is a lightweight, AI-powered desktop tool that lets pharmacists drag-and-drop prescription images or PDFs and automatically extracts structured medication information using state-of-the-art handwriting OCR.
+**Prescription Ocr** is a lightweight, AI-powered desktop tool that lets pharmacists drag-and-drop prescription images or PDFs and automatically extracts structured medication information using state-of-the-art handwriting OCR.
 
 Built with **Electron + Python**, it supports both **modern typed prescriptions** and **scanned handwritten faxes**.
 
@@ -46,8 +46,8 @@ https://user-images.githubusercontent.com/yourvideo.gif
 ### 🔧 Clone + Setup
 
 ```bash
-git clone https://github.com/yourusername/smart-intake.git
-cd smart-intake
+git clone https://github.com/muskanf/prescription_ocr
+cd prescription_ocr
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
