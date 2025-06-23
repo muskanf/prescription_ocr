@@ -177,3 +177,5 @@ cython_debug/
 #node stuff
 node_modules/
 .node_modules/
+
+out/
