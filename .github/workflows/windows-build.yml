@@ -10,18 +10,27 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install
+      # --- NEW STEP: build OCR binary ---------------------------------
+      - name: Build extract_rx.exe with PyInstaller
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller torch pillow opencv-python pytesseract
+          pyinstaller --onefile extract_rx.py
+          copy dist\\extract_rx.exe .
+      # ----------------------------------------------------------------
 
-      - name: Make Electron app
+      - name: Install npm deps
+        run: npm ci   # faster than npm install
+
+      - name: Package Electron app
         run: npm run make
 
       - name: Upload installer
