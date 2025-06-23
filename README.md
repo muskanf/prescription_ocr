@@ -1,15 +1,14 @@
 # 💊 Smart Intake: AI-Powered Prescription Reader
 
-**Smart Intake** is a lightweight, AI-powered desktop tool that lets pharmacists drag-and-drop prescription images or PDFs and automatically extracts structured medication information using state-of-the-art handwriting OCR (via Microsoft's TrOCR model).
+**Smart Intake** is a lightweight, AI-powered desktop tool that lets pharmacists drag-and-drop prescription images or PDFs and automatically extracts structured medication information using state-of-the-art handwriting OCR.
 
-Built with **Electron + Python + Hugging Face Transformers**, it supports both **modern typed prescriptions** and **scanned handwritten faxes**.
+Built with **Electron + Python**, it supports both **modern typed prescriptions** and **scanned handwritten faxes**.
 
 ---
 
 ## 🚀 Features
 
 - 📄 Drag & drop or upload **PDFs / JPEGs / PNGs**
-- 🧠 AI-powered OCR using `microsoft/trocr-base-handwritten`
 - 🧾 Extracts:
   - Patient name
   - Date of birth
@@ -32,9 +31,6 @@ https://user-images.githubusercontent.com/yourvideo.gif
 | Layer        | Tech Used                                     |
 |-------------|------------------------------------------------|
 | Frontend    | [Electron](https://www.electronjs.org/), HTML, JS |
-| Backend     | Python 3.12+, Hugging Face Transformers        |
-| OCR Model   | `microsoft/trocr-base-handwritten`             |
-| File I/O     | `pdf2image`, `Pillow`, `fs`                   |
 
 ---
 
@@ -42,9 +38,8 @@ https://user-images.githubusercontent.com/yourvideo.gif
 
 ### ✅ Prerequisites
 
-- Node.js (v18+ recommended)
-- Python 3.10 or 3.12 (✅ PyTorch supported version)
-- [Poppler](https://github.com/oschwartz10612/poppler-windows/releases) installed & added to `PATH` (for PDF rasterizing)
+- Node.js
+- Python
 
 ---
 
@@ -53,3 +48,8 @@ https://user-images.githubusercontent.com/yourvideo.gif
 ```bash
 git clone https://github.com/yourusername/smart-intake.git
 cd smart-intake
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+npm install
+npm start
