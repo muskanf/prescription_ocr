@@ -25,7 +25,7 @@ jobs:
         run: npm run make
 
       - name: Upload installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: m3dswft-installer
           path: out/make/squirrel.windows/x64/*.exe
