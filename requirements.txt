@@ -1,4 +1,5 @@
-transformers
-torch
-Pillow
+opencv-python
+pytesseract 
+symspellpy
 pdf2image
+numpy
