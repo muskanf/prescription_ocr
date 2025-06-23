@@ -32,7 +32,7 @@ function App() {
           console.error(result.trace);
           alert(`OCR error: ${result.error}`);
         } else {
-          setData(result);      // ← keeps existing behaviour
+          setData(result);      
         }
       } catch {
         alert("Could not parse OCR output.");
@@ -43,7 +43,7 @@ function App() {
     py.stderr.on('data', err => console.error(err.toString()));
   };
 
-  // ---------- Handlers ----------
+  // File handlers 
   const handleFile = (file) => {
     if (!file) return;
     runOCR(file.path);
@@ -84,7 +84,7 @@ function App() {
   if (step === "welcome") {
     return hero(
       "Welcome to m3dswft",
-      "AI-powered prescription intake in seconds.",
+      "Get your prescriptions digitized and ready to use.",
       [
         React.createElement(Button, {
           variant: "contained", size: "large",
@@ -96,16 +96,18 @@ function App() {
 
   if (step === "instructions") {
     return hero(
-      "How it Works",
-      "1. Drag a scanned prescription or click Upload\n2. AI reads patient prescription information\n3. Review & copy to clipboard.",
+      "About",
+      "Are your prescriptions still on paper? Or are they pictures? We can help you digitize them. Just upload a photo or PDF of your prescription, and we'll extract the text for you.",
       [
+        React.createElement(Typography, { variant: "body1", textAlign:"left", color: "text.secondary", mb: 5 },
+          "This is a work in progress, so please be patient. Results may vary based on the quality of the prescription image."),
         React.createElement(Button, {
-          variant: "outlined", size: "large",
+          variant: "contained", size: "large",
           onClick: () => setStep("upload")
         }, "Proceed to Upload"),
-        React.createElement(Link, {
-          href: "#", underline: "hover",
-          onClick: () => setStep("Welcome")
+        React.createElement(Button, {
+          href: "#", variant:"contained", size: "large",
+          onClick: () => setStep("welcome") 
         }, "Back")
       ]
     );
@@ -172,8 +174,8 @@ function App() {
 
     // Back link
     React.createElement(Box, { textAlign: "center", mt: 4 },
-      React.createElement(Link, {
-        href: "#", underline: "hover",
+      React.createElement(Button, {
+        href: "#", variant: "contained", size: "large",
         onClick: () => setStep("instructions")
       }, "Back to Instructions")
     )
